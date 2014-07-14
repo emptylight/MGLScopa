@@ -1,0 +1,13 @@
+<template name = 'layout'>
+	<div id="main">
+		{{> yield}}	
+	</div>
+</template>
+
+<template name="home">
+	{{#if currentUser}}
+		<h1>you're logged in</h1>
+	{{else}}
+		<h1>Please login</h1>
+	{{/if}}
+</template>
