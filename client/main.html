@@ -5,9 +5,42 @@
 </template>
 
 <template name="home">
-	{{#if currentUser}}
-		<h1>you're logged in</h1>
+	{{> signupLogin}}
+</template>
+
+<template name= 'signup'>
+	<form>
+	<h1> sign up </h1>
+	<input type="text" id="su-email" placeholder='Email'>
+	<input type="text" id="su-name" placeholder='Username'>
+	<input type="password" id="su-password" placeholder='Password'>
+	<button> Sign Up </button>
+	</form>
+</template>
+<template name= 'login'>
+	<form>
+	<h1> log in </h1>
+	<input type="text" id="su-name" placeholder='Username'>
+	<input type="password" id="su-password" placeholder='Password'>
+	<button> log in </button>
+	</form>
+</template>
+<template name= 'logout'>
+	<form>
+	<h1> log out </h1>
+	{{ currentUser.username}}
+	<button> log in </button>
+	</form>
+</template>
+<template name = 'signupLogin'>
+	{{#if loggingIn}}
+		logging in ...
 	{{else}}
-		<h1>Please login</h1>
+		{{#if currentUser}}
+			{{> logout}}
+		{{else}}
+			{{> signup}}
+			{{> login}}
+		{{/if}}
 	{{/if}}
 </template>
