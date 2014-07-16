@@ -26,7 +26,6 @@ Template.gameList.helpers
 		(Games.find inProgress:true).map (game)-> # here a fetch() is not needed...since map()?
 			game.otherPlayer = (Meteor.users.findOne otherId game).username
 			game.started = moment(game.started).fromNow() #using moment package to get this done
-			console.log game
 			game  
 
 Template.userList.helpers

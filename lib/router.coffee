@@ -8,6 +8,7 @@ Router.map ->
 		path: '/game/:_id'
 		data: ->
 			game = Games.findOne @params._id
+			return game unless game? # shouldn't be unavailable so there must be something wrong
 			game.player = game.players[Meteor.userId()]
 			game.yourTurn = game.currentTurn[0] is Meteor.userId()
 			otherId = game.currentTurn[if game.yourTurn then 1 else 0]
