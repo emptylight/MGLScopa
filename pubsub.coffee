@@ -9,8 +9,8 @@ if Meteor.isServer
 
 # the following code can be called on both sides but will only be simulated on client side
 Meteor.methods
-	createGame: (otherPlayerId)->
-		game = (new GameFactory).createGame [Meteor.userId(), otherPlayerId]
+	createGameWith: (otherPlayerId)->
+		game = GameFactory.createGame [Meteor.userId(), otherPlayerId]
 		Games.insert game 
 
 
