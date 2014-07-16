@@ -1,7 +1,7 @@
 @GameFactory = {}
 
 GameFactory.dealPlayers = (players,deck)->
-	for i in [0...3]
+	for i in [0..3] # needed to do 4 times ?
 		for player in players
 			player.hand.push deck.shift() #shift?
 
@@ -11,7 +11,7 @@ GameFactory.createGame = (playerIds)->
 		cards = []
 
 		for suit in suits
-			for i in [1...10]
+			for i in [1..10]
 				name = i
 				switch i
 					when i is 1 then name = 'A'

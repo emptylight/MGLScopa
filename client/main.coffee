@@ -18,6 +18,17 @@ Template.logout.events
 		e.preventDefault()
 		Meteor.logout()
 
+otherId = (game) -> 
+	(uid for uid in game.currentTurn when uid isnt Meteor.userId())[0]
+
+Template.gameList.helpers
+	games: -> 
+		(Games.find inProgress:true).map (game)-> # here a fetch() is not needed...since map()?
+			game.otherPlayer = (Meteor.users.findOne otherId game).username
+			game.started = moment(game.started).fromNow() #using moment package to get this done
+			console.log game
+			game  
+
 Template.userList.helpers
 	users: -> 
 		myId = Meteor.userId()
@@ -25,8 +36,7 @@ Template.userList.helpers
 		# note: only games that I'm playing are published
 		gs = Games.find inProgress: true
 		for game in gs.fetch() # a fetch() is needed here otherwise it doesn't work
-			for uid in game.currentTurn
-				cantPlayAgainst.push uid unless uid is myId 
+			cantPlayAgainst.push otherId game 
 
 		Meteor.users.find _id: $not: $in: cantPlayAgainst
 		
