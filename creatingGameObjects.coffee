@@ -1,14 +1,16 @@
 Class GameFactory 
 	constructor: ->
 
-	dealPlayers = (players,deck)->
+	dealPlayers: (players,deck)->
 		for i in [0...3]
 			for player in players
-				player.hand.push deck.shift()
+				player.hand.push deck.shift() #shift?
 
 	createGame: (playerIds)-> 
-		createDeck: ->
+		createDeck = ->
 			suits = ['Cups','Coins','Swords','Clubs']
+			cards = []
+
 			for suit in suits
 				for i in [1...10]
 					name = i
@@ -22,6 +24,7 @@ Class GameFactory
 						value: i
 						name: name
 			 _.shuffle cards
+
 		createPlayers = (ids)->
 			o = {}
 			Class Player 
@@ -38,20 +41,21 @@ Class GameFactory
 			for id in ids
 				o[id] = new Player
 			o
+
 		dealTable = (deck) ->
 			c = deck.shift.bind deck
 			[c(),c(),c(),c()]
 			# what?
 
-		deck = createDeck()
 		players = createPlayers playerId
+		deck = createDeck()
+
 		@dealPlayers players, deck
-		table = dealTable deck
 
 		return 
-			deck:deck
+			deck: deck
 			players: players
-			table:table
+			table: dealTable deck
 			currentTurn:playerIds
 			inProgress: true
 			started: new Date 
