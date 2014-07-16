@@ -1,4 +1,4 @@
-Class GameFactory 
+class @GameFactory 
 	constructor: ->
 
 	dealPlayers: (players,deck)->
@@ -14,7 +14,7 @@ Class GameFactory
 			for suit in suits
 				for i in [1...10]
 					name = i
-					case i
+					switch i
 						when i is 1 then name = 'A'
 						when i is 8 then name = 'N'
 						when i is 9 then name = 'Q'
@@ -27,7 +27,7 @@ Class GameFactory
 
 		createPlayers = (ids)->
 			o = {}
-			Class Player 
+			class Player 
 				constructor: ->
 				hand:[]
 				pile:[]
@@ -47,18 +47,17 @@ Class GameFactory
 			[c(),c(),c(),c()]
 			# what?
 
-		players = createPlayers playerId
+		players = createPlayers playerIds
 		deck = createDeck()
 
 		@dealPlayers players, deck
 
-		return 
-			deck: deck
-			players: players
-			table: dealTable deck
-			currentTurn:playerIds
-			inProgress: true
-			started: new Date 
+		deck: deck
+		players: players
+		table: dealTable deck
+		currentTurn:playerIds
+		inProgress: true
+		started: new Date 
 	
 
 	

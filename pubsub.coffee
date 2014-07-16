@@ -7,6 +7,13 @@ if Meteor.isServer
 	Meteor.publish 'users', -> Meteor.users.find {}
 # change server side code to change the access means security
 
+# the following code can be called on both sides but will only be simulated on client side
+Meteor.methods
+	createGame: (otherPlayerId)->
+		game = (new GameFactory).createGame [Meteor.userId(), otherPlayerId]
+		Games.insert game 
+
+
 ###
 #the game object would look like:
 
