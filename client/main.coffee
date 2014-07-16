@@ -17,3 +17,6 @@ Template.logout.events
 	'click button': (e,t) ->
 		e.preventDefault()
 		Meteor.logout()
+
+Template.userList.helpers
+	users: -> Meteor.users.find()
