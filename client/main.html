@@ -35,7 +35,16 @@
 	</li>
 	
 </template>
-
+<template name = 'play'>
+	{{> signupLogin}}
+	{{#if currentUser}}
+		{{> status}}
+	{{/if}}
+</template>
+<template name= 'status'>
+<p><a href="/">_&larr; Home</a></p>
+<h2>Game between you and {{otherPlayer.username}} {{#if inProgress}} {{#if yourTurn}} (Your turn) {{/if}} {{/if}} </h2>
+</template>
 <template name="userList">
 	<div class="column">
 		<h1> Users </h1>

@@ -2,9 +2,10 @@ Router.configure
   	layoutTemplate: 'layout'
 
 Router.map ->  
-	@route 'home', path: '/'
+	@route 'home', 
+		path: '/'
 	@route 'play', 
-		path: '/game/:id'
+		path: '/game/:_id'
 		data: ->
 			game = Games.findOne @params._id
 			game.player = game.players[Meteor.userId()]
