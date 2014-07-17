@@ -44,7 +44,11 @@
 	{{> signupLogin}}
 	{{#if currentUser}}
 		{{> status}}
-		{{> table}}
+		{{#if inProgress}}
+			{{> table}}
+			{{> hand}}
+		{{/if}}
+		{{> pile}}
 	{{/if}}
 </template>
 
@@ -58,13 +62,23 @@
 	<h2> Table </h2>
 	{{#each table}}
 		<div class="card {{suit}} ">
-			<div>name: {{name}} </div>
-			<div>suit: {{suit}} </div>
+			<div> {{name}} </div>
+			<div> {{suit}} </div>
 		</div>
 	{{/each}}	
 </div>
 </template>
-
+<template name = 'hand'>
+<div id="hand">
+	<h2> Hand </h2>
+	{{#each player.hand}}
+		<div class="card {{suit}} ">
+			<div> {{name}} </div>
+			<div> {{suit}} </div>
+		</div>
+	{{/each}}	
+</div>
+</template>
 
 <template name="userList">
 	<div class="column">
@@ -108,7 +122,9 @@
 	<button> log out </button>
 	</form>
 </template>
+
 <template name = 'signupLogin'>
+<div id="login">
 	{{#if loggingIn}}
 		logging in ...
 	{{else}}
@@ -119,4 +135,16 @@
 			{{> login}}
 		{{/if}}
 	{{/if}}
+</div>
+</template>
+
+<template name= 'pile'>
+<div id="pile">
+	<h2>Collected Cards</h2>
+	<ul>
+		{{#each player.pile}}
+			<li>{{name}} of {{suit}} </li>
+		{{/each}}
+	</ul>
+</div>
 </template>
