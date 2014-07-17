@@ -1,3 +1,8 @@
+Template.hand.events
+	'click .card':(e,t)->
+		if t.data.yourTurn #t is in play template
+			Meteor.call 'takeTurn', t.data._id, @userId, this
+
 Template.signup.events
 	'click button': (evnt,tmplt) ->
 		evnt.preventDefault()

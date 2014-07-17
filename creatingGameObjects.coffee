@@ -1,3 +1,79 @@
+@Turns = {}
+
+Turns.inHand = (set, card) ->
+	for acard in set when matchCard acard, card
+		return true
+	return false
+	
+matchCard = (a,b)->
+	a.suit is b.suit and a.value is b.value
+
+Turns.getMatch = (card, set) ->
+	matches = Turns.findMatches card, set
+	if matches.length > 0
+		return Turns.bestMatch matches
+	return null
+
+Turns.findMatches = (card,set)->
+	matches = []
+	for tableCard in set
+		if tableCard.value is card.value
+			matches.push [tableCard]
+	if matches.length >0 
+		return matches
+	for i in [2..set.length] # for i = 2; i <= set.length; i++
+		combinations set, i, (potentialMatch)->
+			if (sumCards potentialMatch) is card.value
+				matches.push potentialMatch.slice()
+	return matches
+
+Turns.bestMatch = (matches)->
+	mostCoins = [ 0, null]
+	mostCards = [0,null]
+	for match in matches
+		for m in match
+			if m.suit is 'Coins' and m.value is 7
+				return match
+		coinCount = match.filter( (card)-> card.suit is 'Coins').length 
+		if coinCount > mostCoins[0]
+			mostCoins = [coinCount, match]
+		if match.length > mostCards[0] 
+			mostCards = [match.length,match]
+	return if mostCards[0] > mostCoins[0] then mostCards[1] else mostCoins[1]
+
+Turns.takeMatch = (game, id, card, match) ->
+	for matchCard in match
+		game.players[id].pile.push matchCard
+		game.table = Turns.removeCard matchCard, game.table
+
+	game.players[id].pile.push card
+	game.lastScorer = id
+
+	if game.table.length is 0
+		game.players[id].score.scopa++ # scopa ++ will not work!!
+
+Turns.removeCard = (card,set) ->
+	set.filter (setCard)->
+	 	not matchCard card, setCard
+
+sumCards = (set) ->
+	set.reduce ((a,b)-> a + b.value),0
+
+
+# The author copied from stackoverflow answer
+combinations = (numArr, choose, callback) ->
+	n = numArr.length
+	c = []
+	inner = (start, choose_) ->
+		if choose_ is 0
+			callback c 
+		else
+			for i in [start..n - choose_ ] #for i = start; i<= n- choose_; ++i
+				c.push numArr[i]
+				inner i+1,choose_-1
+				c.pop()
+
+
 @GameFactory = {}
 
 GameFactory.dealPlayers = (players,deck)->
@@ -12,12 +88,13 @@ GameFactory.createGame = (playerIds)->
 
 		for suit in suits
 			for i in [1..10]
-				name = i
-				switch i # name = switch i <-- will not work
-					when i is 1 then name ='A'
-					when i is 8 then name ='N'
-					when i is 9 then name ='Q'
-					when i is 10 then name ='K'
+				name = switch i 
+					when 1 then 'A'
+					when 8 then 'N'
+					when 9 then 'Q'
+					when 10 then 'K'
+					else i
+
 				cards.push 
 					suit: suit
 					value: i
