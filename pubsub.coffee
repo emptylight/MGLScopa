@@ -13,8 +13,10 @@ Meteor.methods
 		game = GameFactory.createGame [Meteor.userId(), otherPlayerId]
 		Games.insert game 
 
-	takeTurn:(gameId,id,card) ->
+	takeTurn: (gameId,id,card) ->
 		game = Games.findOne gameId
+		#return {} unless game.players[id]?
+		#console.log game.players[id] 
 		hand = game.players[id].hand
 
 		unless (game.currentTurn[0] is id) and (Turns.inHand hand, card)
@@ -26,7 +28,7 @@ Meteor.methods
 		else
 			game.table.push card
 
-		game.players[id].hand = Turns.removeCard card,hand
+		hand = Turns.removeCard card,hand
 		game.currentTurn.unshift game.currentTurn.pop()
 
 		if allHandsEmpty game.players
@@ -35,7 +37,7 @@ Meteor.methods
 			else
 				#score the game
 
-		Games.update gameId,game
+		Games.update gameId, game
 
 
 allHandsEmpty = (players)->

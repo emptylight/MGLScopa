@@ -1,11 +1,11 @@
 @Turns = {}
 
 Turns.inHand = (set, card) ->
-	for acard in set when matchCard acard, card
+	for acard in set when matchCards acard, card
 		return true
 	return false
 	
-matchCard = (a,b)->
+matchCards = (a,b)->
 	a.suit is b.suit and a.value is b.value
 
 Turns.getMatch = (card, set) ->
@@ -54,7 +54,7 @@ Turns.takeMatch = (game, id, card, match) ->
 
 Turns.removeCard = (card,set) ->
 	set.filter (setCard)->
-	 	not matchCard card, setCard
+	 	not matchCards card, setCard
 
 sumCards = (set) ->
 	set.reduce ((a,b)-> a + b.value),0
@@ -74,12 +74,14 @@ combinations = (numArr, choose, callback) ->
 				c.pop()
 
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 @GameFactory = {}
 
-GameFactory.dealPlayers = (players,deck)->
+GameFactory.dealPlayers = (players, deck)->
 	for i in [0..2] # needed to do 3 times 
-		for player in players
-			player.hand.push deck.shift() #shift?
+		for id in Object.keys players
+			players[id].hand.push deck.shift() #shift?
 
 GameFactory.createGame = (playerIds)-> 
 	createDeck = ->

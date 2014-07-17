@@ -62,9 +62,10 @@ li a:hover {
 
 #hand .card:hover {
 	cursor: pointer;
-	transform: rotate(10deg);
+	text-transform: rotate(10deg);
+
 }
 
 #table, #hand {
-	min-height: 275px
+	min-height: 250px
 } 
