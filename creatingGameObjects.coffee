@@ -82,6 +82,11 @@ GameFactory.dealPlayers = (players, deck)->
 	for i in [0..2] # needed to do 3 times 
 		for id in Object.keys players
 			players[id].hand.push deck.shift() #shift?
+###
+		#this doesn't work:
+		for player in players
+			player.hand.push deck.shift()
+###
 
 GameFactory.createGame = (playerIds)-> 
 	createDeck = ->
