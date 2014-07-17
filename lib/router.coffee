@@ -13,7 +13,7 @@ Router.map ->
 			game.yourTurn = game.currentTurn[0] is Meteor.userId()
 			otherId = game.currentTurn[if game.yourTurn then 1 else 0]
 			game.otherPlayer = 
-				username: Meteor.users.findOne(otherId).username
+				username: Meteor.users.findOne(_id: otherId).username
 				score: game.players[otherId].score
 
 			game

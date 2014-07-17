@@ -1,7 +1,7 @@
 @GameFactory = {}
 
 GameFactory.dealPlayers = (players,deck)->
-	for i in [0..3] # needed to do 4 times ?
+	for i in [0..2] # needed to do 3 times 
 		for player in players
 			player.hand.push deck.shift() #shift?
 
@@ -13,16 +13,17 @@ GameFactory.createGame = (playerIds)->
 		for suit in suits
 			for i in [1..10]
 				name = i
-				switch i
-					when i is 1 then name = 'A'
-					when i is 8 then name = 'N'
-					when i is 9 then name = 'Q'
-					when i is 10 then name = 'K'
+				switch i # name = switch i <-- will not work
+					when i is 1 then name ='A'
+					when i is 8 then name ='N'
+					when i is 9 then name ='Q'
+					when i is 10 then name ='K'
 				cards.push 
 					suit: suit
 					value: i
 					name: name
-		 _.shuffle cards
+
+		_.shuffle cards
 
 	createPlayers = (ids)->
 		o = {}
