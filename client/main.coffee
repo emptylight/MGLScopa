@@ -4,8 +4,8 @@ Template.hand.events
 			Meteor.call 'takeTurn', t.data._id, Meteor.userId(), this
 
 Template.signup.events
-	'click button': (evnt,tmplt) ->
-		evnt.preventDefault()
+	'click button': (e,t) ->
+		e.preventDefault()
 		Accounts.createUser
 			email: ($ '#su-email').val()
 			username: ($ '#su-username').val()
